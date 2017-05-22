@@ -17,8 +17,11 @@ namespace Match3 {
             {102, 51, 0},
             {255, 255, 0}
         };
+        private const int GAME_DURATION = 10 * 1000;
+        private const int TIMER_FREQUENCY = 100;
 
         private int choosenX = -1, choosenY = -1;
+        private int timeLeft = GAME_DURATION;
 
         public GameWindow() : base(Gtk.WindowType.Toplevel) {
             this.Build();
@@ -28,11 +31,20 @@ namespace Match3 {
             drawingarea.AddEvents((int)EventMask.ButtonPressMask);
             drawingarea.ButtonPressEvent += OnFieldClick;
 
-            GLib.Timeout.Add(100, new GLib.TimeoutHandler(OnTimer));
+            GLib.Timeout.Add(TIMER_FREQUENCY, new GLib.TimeoutHandler(OnTimer));
         }
 
         bool OnTimer() {
             drawingarea.QueueDraw();
+            this.timeLeft -= TIMER_FREQUENCY;
+
+            label_time.Text = "Time: " + this.timeLeft / 1000;
+
+            if (this.timeLeft <= 0) {
+                new GameOverWindow();
+                this.Destroy();
+                return false;
+            }
 
             return true;
         }
