@@ -19,6 +19,7 @@ namespace Match3
 			this.Name = "Match3.GameOverWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString("GameOverWindow");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
+			this.Resizable = false;
 			// Container child Match3.GameOverWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox();
 			this.vbox1.Name = "vbox1";

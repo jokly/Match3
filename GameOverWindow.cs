@@ -11,7 +11,6 @@ namespace Match3
 
         protected void OnDeleteEvent(object o, Gtk.DeleteEventArgs args)
         {
-            
             button_toMenu.Click();
         }
 

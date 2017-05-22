@@ -51,10 +51,10 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Window" id="Match3.GameWindow" design-size="600 600">
+  <widget class="Gtk.Window" id="Match3.GameWindow" design-size="605 620">
     <property name="MemberName" />
-    <property name="WidthRequest">600</property>
-    <property name="HeightRequest">600</property>
+    <property name="WidthRequest">605</property>
+    <property name="HeightRequest">620</property>
     <property name="Title" translatable="yes">Match3</property>
     <property name="WindowPosition">Center</property>
     <property name="Resizable">False</property>
@@ -62,6 +62,7 @@
     <child>
       <widget class="Gtk.VBox" id="vbox">
         <property name="MemberName" />
+        <property name="BorderWidth">5</property>
         <child>
           <widget class="Gtk.HBox" id="hbox1">
             <property name="MemberName" />
@@ -101,6 +102,9 @@
         <child>
           <widget class="Gtk.DrawingArea" id="drawingarea">
             <property name="MemberName" />
+            <property name="WidthRequest">600</property>
+            <property name="HeightRequest">600</property>
+            <signal name="ExposeEvent" handler="OnDrawingareaExposeEvent" />
           </widget>
           <packing>
             <property name="Position">1</property>

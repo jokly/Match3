@@ -65,6 +65,7 @@
     <Compile Include="gtk-gui\Match3.GameWindow.cs" />
     <Compile Include="GameOverWindow.cs" />
     <Compile Include="gtk-gui\Match3.GameOverWindow.cs" />
+    <Compile Include="GameField.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

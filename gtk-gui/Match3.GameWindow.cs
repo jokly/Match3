@@ -18,8 +18,8 @@ namespace Match3
 		{
 			global::Stetic.Gui.Initialize(this);
 			// Widget Match3.GameWindow
-			this.WidthRequest = 600;
-			this.HeightRequest = 600;
+			this.WidthRequest = 605;
+			this.HeightRequest = 620;
 			this.Name = "Match3.GameWindow";
 			this.Title = global::Mono.Unix.Catalog.GetString("Match3");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
@@ -27,6 +27,7 @@ namespace Match3
 			// Container child Match3.GameWindow.Gtk.Container+ContainerChild
 			this.vbox = new global::Gtk.VBox();
 			this.vbox.Name = "vbox";
+			this.vbox.BorderWidth = ((uint)(5));
 			// Container child vbox.Gtk.Box+BoxChild
 			this.hbox1 = new global::Gtk.HBox();
 			this.hbox1.Name = "hbox1";
@@ -56,6 +57,8 @@ namespace Match3
 			w3.Fill = false;
 			// Container child vbox.Gtk.Box+BoxChild
 			this.drawingarea = new global::Gtk.DrawingArea();
+			this.drawingarea.WidthRequest = 600;
+			this.drawingarea.HeightRequest = 600;
 			this.drawingarea.Name = "drawingarea";
 			this.vbox.Add(this.drawingarea);
 			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox[this.drawingarea]));
@@ -65,10 +68,11 @@ namespace Match3
 			{
 				this.Child.ShowAll();
 			}
-			this.DefaultWidth = 600;
-			this.DefaultHeight = 600;
+			this.DefaultWidth = 605;
+			this.DefaultHeight = 620;
 			this.Show();
 			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
+			this.drawingarea.ExposeEvent += new global::Gtk.ExposeEventHandler(this.OnDrawingareaExposeEvent);
 		}
 	}
 }
