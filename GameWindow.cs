@@ -22,6 +22,7 @@ namespace Match3 {
 
         private int choosenX = -1, choosenY = -1;
         private int timeLeft = GAME_DURATION;
+        private bool isChoosen = false;
 
         public GameWindow() : base(Gtk.WindowType.Toplevel) {
             this.Build();
@@ -80,8 +81,7 @@ namespace Match3 {
         }
 
         protected void OnDeleteEvent(object o, Gtk.DeleteEventArgs args) {
-            new MainWindow();
-            this.Destroy();
+            this.timeLeft = 0;
         }
 
         protected void OnDrawingareaExposeEvent(object o, Gtk.ExposeEventArgs args) {
@@ -96,8 +96,21 @@ namespace Match3 {
         }
 
         private void OnFieldClick(object o, ButtonPressEventArgs args) {
-            this.choosenX = (int)(args.Event.X / (CELL_SIZE + MARGIN));
-            this.choosenY = (int)(args.Event.Y / (CELL_SIZE + MARGIN));
+            if (!isChoosen) {
+                this.choosenX = (int)(args.Event.X / (CELL_SIZE + MARGIN));
+                this.choosenY = (int)(args.Event.Y / (CELL_SIZE + MARGIN));
+                isChoosen = true;
+            }
+            else {
+                int tx = (int)(args.Event.X / (CELL_SIZE + MARGIN));
+                int ty = (int)(args.Event.Y / (CELL_SIZE + MARGIN));
+
+                gameField.swap(this.choosenX, this.choosenY, tx, ty);
+
+                this.choosenX = -1;
+                this.choosenY = -1;
+                isChoosen = false;
+            }
         }
     }
 }

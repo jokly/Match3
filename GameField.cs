@@ -26,5 +26,27 @@ namespace Match3
                 }
             }
         }
+
+        private bool canSwap(int x1, int y1, int x2, int y2) {
+            if ((x1 == x2 && y1 == y2 + 1) || (x1 == x2 && y1 == y2 - 1) ||
+                (x1 == x2 + 1 && y1 == y2) || (x1 == x2 - 1 && y1 == y2)) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        public bool swap(int x1, int y1, int x2, int y2) {
+            if (canSwap(x1, y1, x2, y2)) {
+                int tmp = this.field[y1, x1];
+                this.field[y1, x1] = this.field[y2, x2];
+                this.field[y2, x2] = tmp;
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
     }
 }
