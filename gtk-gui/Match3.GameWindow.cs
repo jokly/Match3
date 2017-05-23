@@ -71,7 +71,6 @@ namespace Match3
 			this.DefaultWidth = 605;
 			this.DefaultHeight = 620;
 			this.Show();
-			this.DeleteEvent += new global::Gtk.DeleteEventHandler(this.OnDeleteEvent);
 			this.drawingarea.ExposeEvent += new global::Gtk.ExposeEventHandler(this.OnDrawingareaExposeEvent);
 		}
 	}

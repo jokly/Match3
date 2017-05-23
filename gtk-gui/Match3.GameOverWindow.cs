@@ -17,7 +17,7 @@ namespace Match3
 			this.WidthRequest = 300;
 			this.HeightRequest = 200;
 			this.Name = "Match3.GameOverWindow";
-			this.Title = global::Mono.Unix.Catalog.GetString("GameOverWindow");
+			this.Title = global::Mono.Unix.Catalog.GetString("Match3");
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Resizable = false;
 			// Container child Match3.GameOverWindow.Gtk.Container+ContainerChild

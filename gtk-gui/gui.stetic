@@ -58,7 +58,6 @@
     <property name="Title" translatable="yes">Match3</property>
     <property name="WindowPosition">Center</property>
     <property name="Resizable">False</property>
-    <signal name="DeleteEvent" handler="OnDeleteEvent" />
     <child>
       <widget class="Gtk.VBox" id="vbox">
         <property name="MemberName" />
@@ -118,7 +117,7 @@
     <property name="MemberName" />
     <property name="WidthRequest">300</property>
     <property name="HeightRequest">200</property>
-    <property name="Title" translatable="yes">GameOverWindow</property>
+    <property name="Title" translatable="yes">Match3</property>
     <property name="WindowPosition">Center</property>
     <property name="Resizable">False</property>
     <signal name="DeleteEvent" handler="OnDeleteEvent" />
