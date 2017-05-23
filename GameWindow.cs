@@ -38,6 +38,7 @@ namespace Match3 {
         private int choosenX = -1, choosenY = -1, tx, ty;
         private int timeLeft = GAME_DURATION;
         private bool isChoosen = false;
+        private bool wasMove = false;
         private State state;
 
         public GameWindow() : base(Gtk.WindowType.Toplevel) {
@@ -58,7 +59,7 @@ namespace Match3 {
                 }
             }
 
-            gameField = new GameField(FIELD_SIZE, NUM_ElEMENTS);
+            gameField = new GameField(FIELD_SIZE, NUM_ElEMENTS, updateOffsets);
 
             drawingarea.AddEvents((int)EventMask.ButtonPressMask);
             drawingarea.ButtonPressEvent += OnFieldClick;
@@ -87,14 +88,13 @@ namespace Match3 {
 				uint oldScore = gameField.score;
 				this.gameField.resolveClusters();
 
-                if (oldScore == gameField.score) {
+                if (oldScore == gameField.score && this.wasMove) {
                     gameField.swap(this.choosenX, this.choosenY, this.tx, this.ty);
                     updateOffsets(this.choosenX, this.choosenY, this.tx, this.ty);
+                    this.wasMove = false;
                 }
 
                 this.state = Match3.State.Game;
-				this.choosenX = -1;
-				this.choosenY = -1;
             }
 
             this.timeLeft -= TIMER_FREQUENCY;
@@ -104,6 +104,8 @@ namespace Match3 {
                 this.Destroy();
                 return false;
             }
+
+            label_score.Text = "Score: " + gameField.score;
 
             return true;
         }
@@ -181,6 +183,7 @@ namespace Match3 {
                 }
 
                 this.isChoosen = false;
+                this.wasMove = true;
             }
         }
     }

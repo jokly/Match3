@@ -41,17 +41,24 @@ namespace Match3 {
         public uint score { get; private set; }
         private List<Move> avaibleMoves = new List<Move>();
 
-        public GameField(int fieldSize, int numElements) {
+        public delegate void animateSwap(int x1, int y1, int x2, int y2);
+        public event animateSwap onSwap;
+
+        public GameField(int fieldSize, int numElements, animateSwap onSwap) {
             this.fieldSize = fieldSize;
             this.numElements = numElements;
-            this.score = 0;
 
             this.field = new int[fieldSize, fieldSize];
 
+            this.onSwap += onSwap;
+
             generateField();
+
+            this.score = 0;
         }
 
         public void swap(int x1, int y1, int x2, int y2) {
+            Console.WriteLine(x1 + " " + y1 + " " + x2 + " " + y2);
 			int tmp = this.field[y1, x1];
 			this.field[y1, x1] = this.field[y2, x2];
 			this.field[y2, x2] = tmp;
@@ -84,9 +91,21 @@ namespace Match3 {
 
             while (clusters.Count > 0) {
                 removeClusters(clusters);
-                shiftTiles();
+                while (!shiftTiles()) {
+                    generateNewElements();
+                }
 
                 clusters = findClusters();
+            }
+        }
+
+        private void generateNewElements() {
+            Random rand = new Random();
+
+            for (int j = 0; j < fieldSize; j++) {
+                if (this.field[0, j] == -1) {
+                    this.field[0, j] = rand.Next(this.numElements);
+                }
             }
         }
 
@@ -178,8 +197,24 @@ namespace Match3 {
             }
         }
 
-        private void shiftTiles() {
-            
+        private bool shiftTiles() {
+            bool isFull = true;
+
+            for (int i = fieldSize - 1; i >= 0; i--) {
+                for (int j = 0; j < fieldSize; j++) {
+                    int shift = 0;
+                    while (i + shift + 1 < fieldSize && field[i + shift + 1, j] == -1) {
+                        shift++;
+                    }
+                    if (shift != 0) {
+                        isFull = false;
+                        swap(j, i, j, i + shift);
+                        onSwap(j, i, j, i + shift);
+                    }
+                }
+            }
+
+            return isFull;
         }
 
         private void findMoves() {
