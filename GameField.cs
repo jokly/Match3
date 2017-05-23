@@ -186,8 +186,10 @@ namespace Match3 {
                 int rOffset = 0;
 
                 for (int j = 0; j < cluster.length; j++) {
+                    if (this.field[cluster.row + rOffset, cluster.column + cOffset] != -1)
+                        this.score++;
+                    
                     this.field[cluster.row + rOffset, cluster.column + cOffset] = -1;
-                    this.score++;
 
                     if (cluster.horizontal) {
                         cOffset++;
