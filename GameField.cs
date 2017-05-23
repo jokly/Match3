@@ -91,6 +91,8 @@ namespace Match3 {
 
             while (clusters.Count > 0) {
                 removeClusters(clusters);
+
+                generateNewElements();
                 while (!shiftTiles()) {
                     generateNewElements();
                 }
