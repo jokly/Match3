@@ -39,7 +39,6 @@ namespace Match3 {
         public int[,] field { get; private set; }
 
         public uint score { get; private set; }
-        private List<Move> avaibleMoves = new List<Move>();
 
         public delegate void animateSwap(int x1, int y1, int x2, int y2);
         public event animateSwap onSwap;
@@ -51,14 +50,14 @@ namespace Match3 {
             this.field = new int[fieldSize, fieldSize];
 
             this.onSwap += onSwap;
-
-            generateField();
+            do {
+                generateField();
+            } while (findMoves().Count == 0);
 
             this.score = 0;
         }
 
         public void swap(int x1, int y1, int x2, int y2) {
-            Console.WriteLine(x1 + " " + y1 + " " + x2 + " " + y2);
 			int tmp = this.field[y1, x1];
 			this.field[y1, x1] = this.field[y2, x2];
 			this.field[y2, x2] = tmp;
@@ -184,11 +183,9 @@ namespace Match3 {
                 Cluster cluster = clusters[i];
                 int cOffset = 0;
                 int rOffset = 0;
+                this.score += (uint)cluster.length;
 
                 for (int j = 0; j < cluster.length; j++) {
-                    if (this.field[cluster.row + rOffset, cluster.column + cOffset] != -1)
-                        this.score++;
-                    
                     this.field[cluster.row + rOffset, cluster.column + cOffset] = -1;
 
                     if (cluster.horizontal) {
@@ -221,23 +218,25 @@ namespace Match3 {
             return isFull;
         }
 
-        private void findMoves() {
-            this.avaibleMoves.Clear();
+        private List<Move> findMoves() {
+            List<Move> avaibleMoves = new List<Move>();
             int[,] diff = { { 1, 0 }, { 0, 1 } };
 
-            for (var d = 0; d < diff.Length; d++) {
-                for (var i = 0; i < fieldSize; i++) {
-                    for (var j = 0; j < fieldSize; j++) {
+            for (var d = 0; d < 2; d++) {
+                for (var i = 0; i < fieldSize - diff[d, 0]; i++) {
+                    for (var j = 0; j < fieldSize - diff[d, 1]; j++) {
                         swap(i, j, i + diff[d, 0], j + diff[d, 1]);
                         List<Cluster> clusters = findClusters();
                         swap(i, j, i + diff[d, 0], j + diff[d, 1]);
 
                         if (clusters.Count > 0) {
-                            this.avaibleMoves.Add(new Move(i, j, i + diff[d, 0], j + diff[d, 1]));
+                            avaibleMoves.Add(new Move(i, j, i + diff[d, 0], j + diff[d, 1]));
                         }
                     }
                 }
             }
+
+            return avaibleMoves;
         }
     }
 }
