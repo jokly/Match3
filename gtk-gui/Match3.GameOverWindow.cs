@@ -6,6 +6,8 @@ namespace Match3
 	{
 		private global::Gtk.VBox vbox1;
 
+		private global::Gtk.Label label_score;
+
 		private global::Gtk.Label label_gameOver;
 
 		private global::Gtk.Button button_toMenu;
@@ -23,17 +25,25 @@ namespace Match3
 			// Container child Match3.GameOverWindow.Gtk.Container+ContainerChild
 			this.vbox1 = new global::Gtk.VBox();
 			this.vbox1.Name = "vbox1";
-			this.vbox1.Spacing = 50;
-			this.vbox1.BorderWidth = ((uint)(50));
+			this.vbox1.Spacing = 30;
+			this.vbox1.BorderWidth = ((uint)(30));
+			// Container child vbox1.Gtk.Box+BoxChild
+			this.label_score = new global::Gtk.Label();
+			this.label_score.Name = "label_score";
+			this.vbox1.Add(this.label_score);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.label_score]));
+			w1.Position = 0;
+			w1.Expand = false;
+			w1.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.label_gameOver = new global::Gtk.Label();
 			this.label_gameOver.Name = "label_gameOver";
 			this.label_gameOver.LabelProp = global::Mono.Unix.Catalog.GetString("Game Over");
 			this.vbox1.Add(this.label_gameOver);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.label_gameOver]));
-			w1.Position = 0;
-			w1.Expand = false;
-			w1.Fill = false;
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.label_gameOver]));
+			w2.Position = 1;
+			w2.Expand = false;
+			w2.Fill = false;
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.button_toMenu = new global::Gtk.Button();
 			this.button_toMenu.CanFocus = true;
@@ -41,10 +51,10 @@ namespace Match3
 			this.button_toMenu.UseUnderline = true;
 			this.button_toMenu.Label = global::Mono.Unix.Catalog.GetString("To Main Menu");
 			this.vbox1.Add(this.button_toMenu);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.button_toMenu]));
-			w2.Position = 1;
-			w2.Expand = false;
-			w2.Fill = false;
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox1[this.button_toMenu]));
+			w3.Position = 2;
+			w3.Expand = false;
+			w3.Fill = false;
 			this.Add(this.vbox1);
 			if ((this.Child != null))
 			{

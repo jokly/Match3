@@ -3,10 +3,11 @@ namespace Match3
 {
     public partial class GameOverWindow : Gtk.Window
     {
-        public GameOverWindow() :
-                base(Gtk.WindowType.Toplevel)
+        public GameOverWindow(uint score) : base(Gtk.WindowType.Toplevel)
         {
             this.Build();
+
+            label_score.Text = "Score: " + score;
         }
 
         protected void OnDeleteEvent(object o, Gtk.DeleteEventArgs args)

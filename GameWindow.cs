@@ -100,7 +100,7 @@ namespace Match3 {
             this.timeLeft -= TIMER_FREQUENCY;
             label_time.Text = "Time: " + this.timeLeft / 1000;
             if (this.timeLeft <= 0) {
-                new GameOverWindow();
+                new GameOverWindow(gameField.score);
                 this.Destroy();
                 return false;
             }
