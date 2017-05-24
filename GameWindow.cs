@@ -71,47 +71,66 @@ namespace Match3 {
         bool OnTimer() {
             drawingarea.QueueDraw();
 
-            bool isAnim = false;
-            for (int i = 0; i < FIELD_SIZE; i++) {
-                for (int j = 0; j < FIELD_SIZE; j++) {
-                    if (offsets[i, j].x != 0) {
-                        offsets[i, j].x -= offsets[i, j].x / Math.Abs(offsets[i, j].x) * 24;
-                        isAnim = true;
-                    }
-                    if (offsets[i, j].y != 0) {
-                        offsets[i, j].y -= offsets[i, j].y / Math.Abs(offsets[i, j].y) * 24;
-                        isAnim = true;
-                    }
-                }
-            }
+            animation();
+            updateTime();
+            updateScore();
 
-            if (!isAnim && this.state == Match3.State.Animation) {
-				uint oldScore = gameField.score;
-				this.gameField.resolveClusters();
-
-                if (oldScore == gameField.score && this.wasMove) {
-                    gameField.swap(this.choosenX, this.choosenY, this.tx, this.ty);
-                    updateOffsets(this.choosenX, this.choosenY, this.tx, this.ty);
-                    this.wasMove = false;
-                }
-
-                this.state = Match3.State.Game;
-            }
-
-            this.timeLeft -= TIMER_FREQUENCY;
-            label_time.Text = "Time: " + this.timeLeft / 1000;
-            if (this.timeLeft <= 0) {
-                new GameOverWindow(gameField.score);
-                this.Destroy();
+            if (checkEnd())
                 return false;
-            }
-
-            label_score.Text = "Score: " + gameField.score;
 
             return true;
         }
 
-        private void DrawField(Cairo.Context cc) {
+        private void animation() {
+			bool isAnim = false;
+			for (int i = 0; i < FIELD_SIZE; i++) {
+				for (int j = 0; j < FIELD_SIZE; j++) {
+					if (offsets[i, j].x != 0) {
+						offsets[i, j].x -= offsets[i, j].x / Math.Abs(offsets[i, j].x) * 24;
+						isAnim = true;
+					}
+					if (offsets[i, j].y != 0) {
+						offsets[i, j].y -= offsets[i, j].y / Math.Abs(offsets[i, j].y) * 24;
+						isAnim = true;
+					}
+				}
+			}
+
+			if (!isAnim && this.state == Match3.State.Animation) {
+				uint oldScore = gameField.score;
+				this.gameField.resolveClusters();
+
+				if (oldScore == gameField.score && this.wasMove) {
+					gameField.swap(this.choosenX, this.choosenY, this.tx, this.ty);
+					updateOffsets(this.choosenX, this.choosenY, this.tx, this.ty);
+					this.wasMove = false;
+				}
+
+				this.state = Match3.State.Game;
+			}
+        }
+
+        private void updateTime() {
+			this.timeLeft -= TIMER_FREQUENCY;
+			label_time.Text = "Time: " + this.timeLeft / 1000;    
+        }
+
+		private void updateScore() {
+            label_score.Text = "Score: " + gameField.score;
+		}
+
+        private bool checkEnd() {
+			if (this.timeLeft <= 0) {
+				new GameOverWindow(gameField.score);
+				this.Destroy();
+
+				return true;
+			}
+
+            return false;
+        }
+
+        private void drawField(Cairo.Context cc) {
             cc.LineWidth = 1;
 
             int x = MARGIN, y = MARGIN;
@@ -130,7 +149,7 @@ namespace Match3 {
             }
         }
 
-        void DrawSelectionFrame(Cairo.Context cc) {
+        void drawSelectionFrame(Cairo.Context cc) {
             if (this.choosenX == -1 || this.choosenY == -1 || !this.isChoosen)
                 return;
             
@@ -182,8 +201,8 @@ namespace Match3 {
             DrawingArea area = (DrawingArea)o;
             Cairo.Context cc = Gdk.CairoHelper.Create(area.GdkWindow);
 
-            DrawField(cc);
-            DrawSelectionFrame(cc);
+            drawField(cc);
+            drawSelectionFrame(cc);
             drawAvaibleMoves(cc);
 
 			((IDisposable)cc.GetTarget()).Dispose();
