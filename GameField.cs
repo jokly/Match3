@@ -17,13 +17,13 @@ namespace Match3 {
         }
     }
 
-    struct Move {
+    public struct Move {
         public int col1 { get; private set; }
         public int row1 { get; private set; }
         public int col2 { get; private set; }
         public int row2 { get; private set; }
 
-        public Move(int col1, int row1, int col2, int row2) {
+        public Move(int row1, int col1, int row2, int col2) {
             this.col1 = col1;
             this.row1 = row1;
             this.col2 = col2;
@@ -218,7 +218,7 @@ namespace Match3 {
             return isFull;
         }
 
-        private List<Move> findMoves() {
+        public List<Move> findMoves() {
             List<Move> avaibleMoves = new List<Move>();
             int[,] diff = { { 1, 0 }, { 0, 1 } };
 

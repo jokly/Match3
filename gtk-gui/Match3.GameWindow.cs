@@ -12,6 +12,8 @@ namespace Match3
 
 		private global::Gtk.Label label_score;
 
+		private global::Gtk.CheckButton checkbutton_showMoves;
+
 		private global::Gtk.DrawingArea drawingarea;
 
 		protected virtual void Build()
@@ -50,19 +52,30 @@ namespace Match3
 			w2.Position = 1;
 			w2.Expand = false;
 			w2.Fill = false;
+			// Container child hbox1.Gtk.Box+BoxChild
+			this.checkbutton_showMoves = new global::Gtk.CheckButton();
+			this.checkbutton_showMoves.CanFocus = true;
+			this.checkbutton_showMoves.Name = "checkbutton_showMoves";
+			this.checkbutton_showMoves.Label = global::Mono.Unix.Catalog.GetString("Show avaible moves");
+			this.checkbutton_showMoves.DrawIndicator = true;
+			this.checkbutton_showMoves.UseUnderline = true;
+			this.hbox1.Add(this.checkbutton_showMoves);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.checkbutton_showMoves]));
+			w3.PackType = ((global::Gtk.PackType)(1));
+			w3.Position = 2;
 			this.vbox.Add(this.hbox1);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox[this.hbox1]));
-			w3.Position = 0;
-			w3.Expand = false;
-			w3.Fill = false;
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox[this.hbox1]));
+			w4.Position = 0;
+			w4.Expand = false;
+			w4.Fill = false;
 			// Container child vbox.Gtk.Box+BoxChild
 			this.drawingarea = new global::Gtk.DrawingArea();
 			this.drawingarea.WidthRequest = 600;
 			this.drawingarea.HeightRequest = 600;
 			this.drawingarea.Name = "drawingarea";
 			this.vbox.Add(this.drawingarea);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox[this.drawingarea]));
-			w4.Position = 1;
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox[this.drawingarea]));
+			w5.Position = 1;
 			this.Add(this.vbox);
 			if ((this.Child != null))
 			{

@@ -2,6 +2,7 @@
 using Gdk;
 using Cairo;
 using System;
+using System.Collections.Generic;
 using Match3;
 
 namespace Match3 {
@@ -141,6 +142,27 @@ namespace Match3 {
             cc.StrokePreserve();
         }
 
+        void drawAvaibleMoves(Cairo.Context cc) {
+			if (checkbutton_showMoves.Active) {
+				List<Move> avaibleMove = gameField.findMoves();
+
+                cc.SetSourceRGB(0, 0, 102);
+                cc.LineWidth = 2;
+                int cellSize = CELL_SIZE + MARGIN;
+                int offset = cellSize / 2;
+				for (int i = 0; i < avaibleMove.Count; i++) {
+                    int y1 = avaibleMove[i].col1 * cellSize + offset;
+                    int x1 = avaibleMove[i].row1 * cellSize + offset;
+                    int y2 = avaibleMove[i].col2 * cellSize + offset;
+                    int x2 = avaibleMove[i].row2 * cellSize + offset;
+
+                    cc.MoveTo(new PointD(x1, y1));
+                    cc.LineTo(new PointD(x2, y2));
+                    cc.Stroke();
+				}
+			}
+        }
+
         void updateOffsets(int x1, int y1, int x2, int y2) {
             this.state = Match3.State.Animation;
             int offsetX = (CELL_SIZE + MARGIN) * (x2 - x1);
@@ -162,6 +184,7 @@ namespace Match3 {
 
             DrawField(cc);
             DrawSelectionFrame(cc);
+            drawAvaibleMoves(cc);
 
 			((IDisposable)cc.GetTarget()).Dispose();
 			((IDisposable)cc).Dispose();
