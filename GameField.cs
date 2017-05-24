@@ -88,8 +88,10 @@ namespace Match3 {
         public void resolveClusters() {
             List<Cluster> clusters = findClusters();
 
+            bool isFirst = true;
             while (clusters.Count > 0) {
-                removeClusters(clusters);
+                removeClusters(clusters, isFirst);
+                isFirst = false;
 
                 generateNewElements();
                 while (!shiftTiles()) {
@@ -174,29 +176,28 @@ namespace Match3 {
             return clusters;
         }
 
-        private void removeClusters(List<Cluster> clusters) {
-            loopClusters(clusters);
-		}
+        private void removeClusters(List<Cluster> clusters, bool isFirst) {
+			for (int i = 0; i < clusters.Count; i++) {
+				Cluster cluster = clusters[i];
 
-        private void loopClusters(List<Cluster> clusters) {
-            for (int i = 0; i < clusters.Count; i++) {
-                Cluster cluster = clusters[i];
-                int cOffset = 0;
+				if (isFirst)
+					this.score += (uint)cluster.length;
+
+				int cOffset = 0;
                 int rOffset = 0;
-                this.score += (uint)cluster.length;
 
-                for (int j = 0; j < cluster.length; j++) {
-                    this.field[cluster.row + rOffset, cluster.column + cOffset] = -1;
+				for (int j = 0; j < cluster.length; j++) {
+					this.field[cluster.row + rOffset, cluster.column + cOffset] = -1;
 
-                    if (cluster.horizontal) {
-                        cOffset++;
-                    }
-                    else {
-                        rOffset++;
-                    }
-                }
-            }
-        }
+					if (cluster.horizontal) {
+						cOffset++;
+					}
+					else {
+						rOffset++;
+					}
+				}
+			}
+		}
 
         private bool shiftTiles() {
             bool isFull = true;
